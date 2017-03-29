@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A nice app",
   "main": "app.js",
+  "git": "https://github.com/CodingDK/TypeScript-Express.git",
   "scripts": {
     "_start": "node dist/startup.js",
     "start": "npm run dev",
