@@ -1,3 +1,7 @@
+# Custom ignores start
+.startupWithSecrets.ts
+# Custom ignores end
+
 # Logs
 logs
 *.log
