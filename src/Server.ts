@@ -82,7 +82,7 @@ class Server {
         res.sendFile(path.join(__dirname+'/login.html'));
     });
 
-    router.post('/login', passport.authenticate('local-login',{
+    router.post('/login', passport.authenticate('local',{
             successRedirect: 'locked',
             failureRedirect: 'login',
             failureFlash: true
@@ -129,7 +129,7 @@ class Server {
   }
 
   // route middleware to make sure a user is logged in
-  private isLoggedIn(req, res, next) : void {
+  private isLoggedIn(req: any, res: any, next : any) : void {
     // if user is authenticate in the session, carry on
     if(req.isAuthenticated()){
       return next();

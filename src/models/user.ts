@@ -1,6 +1,6 @@
 //import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt-nodejs';
-import { Document, Schema, model } from 'mongoose'
+import { Document, Schema, model } from 'mongoose';
 
 export class User {
   email: string;
@@ -16,11 +16,11 @@ export class User {
     return new User({email, password: hashed});
   }
 
-  private static generateHash(password): string {
+  private static generateHash(password: string): string {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
   }
 
-  public validPassword(password): boolean {
+  public validPassword(password: string): boolean {
     return bcrypt.compareSync(password, this.password);
   }
 }

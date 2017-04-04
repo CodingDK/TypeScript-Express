@@ -19,13 +19,13 @@ export class HeroRouter {
   public getAll(req: Request, res: Response, next: NextFunction) {
     res.send(Heroes);
   }
-  
+
   /**
    * GET one hero by id
    */
   public getOne(req: Request, res: Response, next: NextFunction) {
     let query = parseInt(req.params.id);
-    let hero = Heroes.find(hero => hero.id === query);
+    let hero = Heroes.find((hero: any) => hero.id === query);
     if (hero) {
       res.status(200)
         .send({
