@@ -13,13 +13,13 @@ export class LoginController {
         // if no user is found, return message
         if (!user) {
           console.log("no user found with " + email);
-          return done(null, false, req.flash('loginMessage', 'No user found.'));
+          return done(null, false, {message: "no user found with " + email});
         }
 
         // if the user exists, we check the password
         if (!user.validPassword(password)) {
           console.log("user password not valid, email: " + email);
-          return done(null, false, req.flash('loginMessage', 'Opps! Wrong password.'));
+          return done(null, false, {message: "wrong password for email: " + email});
         }
 
         console.log("user logged in", JSON.stringify(user));
@@ -43,7 +43,7 @@ export class LoginController {
         // check if the email already exists
         if (user) {
           console.log("user email already created, email: ", email);
-          return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
+          return done(null, false, {message: "That email is already taken: " + email});
         } else {
           this.userCtrl.createUser(email, password)
             .then((user) => {
