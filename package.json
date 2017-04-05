@@ -6,14 +6,25 @@
   "git": "https://github.com/CodingDK/TypeScript-Express.git",
   "scripts": {
     "_start": "node dist/startup.js",
-    "start": "npm run dev",
-    "dev": "nodemon",
+    "start": "concurrently --kill-others \"ng serve --progress=false \" \"npm run _server:run\"",
+    "_server:run": "nodemon",
     "gulpAndStart": "gulp scripts && npm run start",
     "test": "mocha --reporter spec --compilers ts:ts-node/register test/**/*.test.ts"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@angular/common": "^4.0.0",
+    "@angular/compiler": "^4.0.0",
+    "@angular/core": "^4.0.0",
+    "@angular/forms": "^4.0.0",
+    "@angular/http": "^4.0.0",
+    "@angular/platform-browser": "^4.0.0",
+    "@angular/platform-browser-dynamic": "^4.0.0",
+    "@angular/router": "^4.0.0",
+    "core-js": "^2.4.1",
+    "rxjs": "^5.1.0",
+    "zone.js": "^0.8.4",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.1",
     "connect-flash": "^0.1.1",
@@ -27,6 +38,8 @@
     "passport-local": "^1.0.0"
   },
   "devDependencies": {
+    "@angular/cli": "^1.0.0",
+    "@angular/compiler-cli": "^4.0.0",
     "@types/bcrypt-nodejs": "0.0.30",
     "@types/body-parser": "^1.16.2",
     "@types/chai": "^3.4.35",
@@ -44,10 +57,12 @@
     "@types/passport-local": "^1.0.29",
     "chai": "^3.5.0",
     "chai-http": "^3.0.0",
+    "concurrently": "^3.4.0",
     "gulp": "^3.9.1",
     "gulp-typescript": "^3.1.6",
     "mocha": "^3.2.0",
     "ts-node": "^3.0.2",
+    "tslint": "~4.5.0",
     "typescript": "^2.2.2"
   }
 }

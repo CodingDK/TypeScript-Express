@@ -3,6 +3,7 @@
     "alwaysStrict" : true,
     "strictNullChecks": true,
     "noImplicitAny": true,
+    "experimentalDecorators": true,
     "target": "es6",
     "module": "commonjs",
     "outDir": "dist",
