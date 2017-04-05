@@ -1,21 +1,14 @@
-import {Users, UserDocument} from '../models/user';
-import {UserDAL} from '../dal/userDAL';
+import {UserController} from './UserController';
+import {UserDocument} from '../models/user';
 
-export class UserController {
-  private dal: UserDAL = new UserDAL();
-
-  constructor() {
-  }
-
-  public findById(id : string) : Promise<UserDocument> {
-    return this.dal.findById(id);
-  }
+export class LoginController {
+  private userCtrl: UserController = new UserController();
 
   public loginWithPassport(req: any, email: string, password: string, done: any) : void {
     console.log("before looking for user in db, req.user: ", JSON.stringify(req.user));
     console.log("before looking for user in db, email: ", email);
     console.log("this, login?", JSON.stringify(this));
-    this.dal.findByEmail(email)
+    this.userCtrl.findByEmail(email)
       .then((user: UserDocument) => {
         // if no user is found, return message
         if (!user) {
@@ -45,14 +38,14 @@ export class UserController {
 
   public signUpWithPassport(req: any, email: string, password: string, done: any) : void {
     //TODO move the stuff about checking for exists user to dal?
-    this.dal.findByEmail(email)
+    this.userCtrl.findByEmail(email)
       .then((user) => {
         // check if the email already exists
         if (user) {
           console.log("user email already created, email: ", email);
           return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
         } else {
-          this.dal.createUser(email, password)
+          this.userCtrl.createUser(email, password)
             .then((user) => {
               return done(null, user);
             })
@@ -61,5 +54,22 @@ export class UserController {
             });
         }
       })
+  }
+
+  public serializeUser(user: UserDocument, done: any) : void {
+    console.log("serializeUser", JSON.stringify(user));
+    done(null, user._id);
+  }
+
+  public deserializeUser(id: string, done: any) : void {
+    console.log("deserializeUser ID: ", JSON.stringify(id));
+    console.log("test, this?", JSON.stringify(this));
+    this.userCtrl.findById(id)
+      .then((user) => {
+        done(null, user);
+      })
+      .catch((err) => {
+        done(err);
+      });
   }
 }

@@ -101,35 +101,6 @@ class Server {
         res.redirect('/');
     });
 
-
-
-    //router.post('/login', passport.authenticate('local'));
-    /*router.post('/login',
-      passport.authenticate('local', { failureRedirect: '/login' }),
-      function(req, res) {
-        res.redirect('/');
-      }
-    );*/
-    /*router.post('/login',
-        function (req, res, next) {
-            console.log("User.validate()");
-            next();
-        },
-        passport.authenticate('local',{
-                successRedirect: '/locked',
-                failureRedirect: '/login',
-                failureFlash : true
-            }
-        ));*/
-    /*router.post('/login', passport.authenticate('local',{
-        successRedirect: '/locked',
-        failureRedirect: '/login',
-        failureFlash: true
-      })
-    ,
-  function(req, res) {
-    res.redirect('/');
-  });*/
     this.express.use('/', router);
     this.express.use('/api/v1/heroes', HeroRouter);
   }

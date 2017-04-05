@@ -2,10 +2,10 @@ import {Application} from 'express';
 import * as passport from "passport";
 const LocalStrategy = require('passport-local').Strategy;
 import {User, Users, UserDocument} from '../models/user';
-import {UserController} from '../controllers/UserController';
+import {LoginController} from '../controllers/LoginController';
 
 export default class PassportConfig {
-  private ctrl: UserController = new UserController();
+  private ctrl: LoginController = new LoginController();
 
   constructor(private app: Application) {
     this.init();
@@ -25,21 +25,12 @@ export default class PassportConfig {
 
     // used to serialize the user for the session
     passport.serializeUser((user: UserDocument, done) => {
-      console.log("serializeUser", JSON.stringify(user));
-      done(null, user._id);
+      this.ctrl.serializeUser(user, done);
     });
 
     // used to deserialize the user
     passport.deserializeUser((id: string, done: any) => {
-      console.log("deserializeUser ID: ", JSON.stringify(id));
-      console.log("test, this?", JSON.stringify(this));
-      this.ctrl.findById(id)
-        .then((user) => {
-          done(null, user);
-        })
-        .catch((err) => {
-          done(err);
-        });
+      this.ctrl.deserializeUser(id, done);
     });
 
     // ============ //
