@@ -5,12 +5,14 @@ import * as bodyParser from 'body-parser';
 import * as passport from "passport";
 import * as session from 'express-session';
 import * as cookieParser from 'cookie-parser';
-import * as mongoose from 'mongoose';
 import flash = require('connect-flash');
 import config from './config/config';
 
 import HeroRouter from './routes/HeroRouter';
 import PassportConfig from './config/PassportConfig';
+
+import {IDatabase} from './config/IDatabase';
+import {MongoDatabase} from './dal/MongoDatabase';
 
 
 // Creates and configures an ExpressJS web server.
@@ -25,14 +27,18 @@ class Server {
     this.middleware();
     this.routes();
   }
-
   // Configure Express middleware.
   private middleware(): void {
     const app = this.express;
+    const dbHandler: IDatabase = new MongoDatabase();
     // the url correspond to the environment we are in
     app.set('dbUrl', config.db['development']);
-    // we're going to use mongoose to interact with the mongodb
-    mongoose.connect(app.get('dbUrl'));
+    // open connection to Database
+    dbHandler.openConnection(app.get('dbUrl'));
+    // If the Node process ends, close the database connection
+    process.on('SIGINT', dbHandler.closeConnectionEvent);
+    process.on('SIGTERM', dbHandler.closeConnectionEvent);
+
     app.use(logger('dev'));
     app.use(cookieParser('secretForAll'));
     app.use(bodyParser.json());
