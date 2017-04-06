@@ -4,6 +4,7 @@ import * as logger from 'morgan';
 import {json, urlencoded} from 'body-parser';
 import * as session from 'express-session';
 import * as cookieParser from 'cookie-parser';
+import * as cors from 'cors';
 //import flash = require('connect-flash');
 import config from './config/config';
 
@@ -37,6 +38,7 @@ class Server {
     process.on('SIGINT', dbHandler.closeConnectionEvent);
     process.on('SIGTERM', dbHandler.closeConnectionEvent);
 
+    app.use(cors({ origin: /localhost:4200$/, credentials: true})); //
     app.use(logger('dev'));
     app.use(cookieParser('secretForAll'));
     app.use(json());

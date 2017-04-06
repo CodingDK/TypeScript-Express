@@ -19,8 +19,16 @@ loginRouter.post("/", passport.authenticate('local'),
 );
 
 loginRouter.get('/logout', (req: Request, res: Response, next: NextFunction) => {
-    req.logout();
-    res.redirect('/');
+  req.logout();
+  res.json({ login: false });
+    //res.redirect('/');
 });
+
+loginRouter.get("/status",
+  (req: Request, res: Response) => {
+    // `req.user` contains the authenticated user.
+    res.json({ login: req.isAuthenticated() });
+  }
+);
 
 export { loginRouter };
