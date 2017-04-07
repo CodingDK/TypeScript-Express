@@ -4,9 +4,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { LoginComponent } from './login.component';
 
+import { GithubComponent } from './github.component';
+
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
+  { path: 'github', component: GithubComponent },
   { path: 'login', component: LoginComponent },
   { path: '**', redirectTo: '' } //TODO make 404 page
 ];

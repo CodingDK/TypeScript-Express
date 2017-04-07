@@ -1,0 +1,9 @@
+<h1>Hello world</h1>
+
+<!--{{!githubService.getAllCommits() | json}}-->
+
+<ul>
+  <li *ngFor="let item of commits;">
+    {{item.commit.author.date}} - {{item.commit.author.name}} - {{item.commit.message}}
+  </li>
+</ul>

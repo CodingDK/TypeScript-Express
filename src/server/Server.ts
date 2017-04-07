@@ -8,7 +8,8 @@ import * as cors from 'cors';
 //import flash = require('connect-flash');
 import config from './config/config';
 
-import {loginRouter} from './routes/loginRouter';
+import { loginRouter } from './routes/loginRouter';
+import { githubRouter } from './routes/githubRouter';
 import HeroRouter from './routes/HeroRouter';
 import PassportConfig from './config/PassportConfig';
 
@@ -56,12 +57,13 @@ class Server {
   // Configure API endpoints.
   private routes(): void {
     let app = this.express;
-    let router = express.Router();
-    router.get('/', (req, res, next) => {
+    //let router = express.Router();
+    /*router.get('/', (req, res, next) => {
       res.sendFile(path.join(__dirname+'/../client/index.html'));
-    });
+    });*/
 
-    app.use('/', router);
+    //app.use('/', router);
+    app.use('/api/github', githubRouter);
     app.use('/api/login', loginRouter);
     app.use('/api/heroes', HeroRouter);
     //TODO better handling for angular routes, maybe use next line
@@ -70,13 +72,14 @@ class Server {
   }
 
   // route middleware to make sure a user is logged in
-  private isLoggedIn(req: any, res: any, next : any) : void {
+  private isLoggedIn(req: any, res: any, next: any): void {
     // if user is authenticate in the session, carry on
-    if(req.isAuthenticated()){
+    if (req.isAuthenticated()) {
       return next();
     }
     // in any other case, redirect to the home
-    res.redirect('/');
+    //res.redirect('/');
+    res.send(401, { login: false, text: 'Your are not logged in!' });
   }
 
 }

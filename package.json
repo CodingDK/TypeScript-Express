@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "@types/cors": "^2.8.1",
+    "@types/request": "0.0.42",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.17.1",
     "bootstrap": "^3.3.7",
@@ -37,6 +38,7 @@
     "morgan": "^1.8.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "request": "^2.81.0",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
   },
