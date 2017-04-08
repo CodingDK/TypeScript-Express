@@ -10,20 +10,19 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class AuthService {
   private loggedIn: boolean = false;
+  private finishFirstRun: boolean = false;
+  private promise: Promise<any>;
 
   private loginUrl = 'http://localhost:3000/api/login';
   private logoutUrl = 'http://localhost:3000/api/login/logout';
   private statusUrl = 'http://localhost:3000/api/login/status';
 
   constructor(private http: Http, private router: Router) {
-    this.http.get(this.statusUrl, { withCredentials: true })
+    this.promise = this.http.get(this.statusUrl, { withCredentials: true })
       .toPromise()
       .then(response => {
-        //const loggedIn = response.status == 200;
         this.loggedIn = response.json().login;
-        //console.log("response", response);
-        //console.log("responseJson", response.json());
-        //return false;
+        return this.loggedIn;
       })
       .catch(this.handleError);
   }
@@ -36,6 +35,7 @@ export class AuthService {
       .toPromise()
       .then(response => {
         const loggedIn = response.status == 200;
+        this.finishFirstRun = true;
         this.loggedIn = loggedIn;
         //console.log("response", response);
         //console.log("responseJson", response.json());
@@ -57,7 +57,19 @@ export class AuthService {
     this.router.navigateByUrl('/login');
   }
   
-  isLoggedIn() {
+  isLoggedInAsPromise(): Promise<boolean> {
+    if (this.finishFirstRun) {
+      return new Promise<boolean>(response => { return this.isLoggedIn });
+    }
+    return this.promise;
+
+  }
+
+  isFinishFirstRun(): boolean {
+    return this.finishFirstRun;
+  }
+  
+  isLoggedIn(): boolean {
     return this.loggedIn;
   }
   
