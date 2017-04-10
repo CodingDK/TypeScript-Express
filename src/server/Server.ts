@@ -65,7 +65,7 @@ class Server {
     //app.use('/', router);
     app.use('/api/github', githubRouter);
     app.use('/api/login', loginRouter);
-    app.use('/api/heroes', HeroRouter);
+    app.use('/api/v1/heroes', HeroRouter);
     //TODO better handling for angular routes, maybe use next line
     //app.use(express.static(path.join(__dirname, "/../client")));
 
